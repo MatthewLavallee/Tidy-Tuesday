@@ -2,6 +2,8 @@ library('tidyverse')
 library('ggthemes')
 library('scales')
 library('patchwork')
+library('ggtext')
+library('gghighlight')
   #load necessary packages
 tuition_income <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_income.csv') 
 salary_potential <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/salary_potential.csv')
@@ -35,7 +37,7 @@ RDensity<-ggplot(data=proportion_white)+geom_density(aes(x=100-Percent),col="#FF
 
 FDensity<-ggplot(data=proportion_FE)+geom_density(aes(x=Percent),col="#FF64B0")+geom_density(data=proportion_FE_MA,aes(x=Percent),col="#619CFF")+labs(x="Percent of Student Body\nThat are Women",y="")+geom_segment(aes(x=59.2,y=0,xend=59.2,yend=0.037),col="#00B4F0")+scale_x_continuous(expand=c(0,0))+scale_y_continuous(expand=c(0,0))+theme_economist()
 
-TuiVSalary<-ggplot(data=df)+geom_point(aes(x=total_price,y=as.numeric(mid_career_pay),col=name=="Hampshire College"),show.legend = FALSE)+labs(y="Salary",x="Total Price")+theme_economist()
+TuiVSalary<-ggplot(data=df)+geom_point(aes(x=total_price,y=as.numeric(mid_career_pay)),show.legend = FALSE,col="#00B4F0")+labs(y="Salary",x="Total Price",title = "<span style = 'font-size:12pt'><span style = 'color:#00B4F0;'>**Hampshire College**</span>: Expensive but Not Worthless")+theme_economist()+gghighlight(name== "Hampshire College")+ theme(plot.title =element_textbox_simple())
 
 df1<- df %>% filter(state=="MA")
 
